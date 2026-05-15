@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌍 지구를 지켜라! 환경 퀴즈</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 시작 화면 -->
+  <div id="screen-start" class="screen active">
+    <div class="start-container">
+      <div class="earth-icon">🌍</div>
+      <h1 class="main-title">지구를 지켜라!</h1>
+      <p class="main-subtitle">환경 퀴즈 대모험</p>
+      <p class="intro-text">
+        우리 지구를 위해 얼마나 알고 있나요?<br/>
+        100가지 환경 퀴즈에 도전해 보세요! 🌱
+      </p>
+
+      <div class="category-section">
+        <h2 class="category-title">📚 카테고리 선택</h2>
+        <div class="category-grid">
+          <button class="category-btn active" data-category="all">🌍 전체 (100문제)</button>
+          <button class="category-btn" data-category="climate">☀️ 기후 &amp; 날씨</button>
+          <button class="category-btn" data-category="recycle">♻️ 재활용 &amp; 분리수거</button>
+          <button class="category-btn" data-category="animals">🐾 동물 &amp; 생태계</button>
+          <button class="category-btn" data-category="ocean">🌊 바다 &amp; 물</button>
+          <button class="category-btn" data-category="energy">⚡ 에너지 &amp; 자원</button>
+          <button class="category-btn" data-category="forest">🌲 숲 &amp; 식물</button>
+          <button class="category-btn" data-category="pollution">🏭 환경오염</button>
+        </div>
+      </div>
+
+      <div class="mode-section">
+        <h2 class="category-title">🎮 문제 수 선택</h2>
+        <div class="mode-grid">
+          <button class="mode-btn active" data-count="10">10문제</button>
+          <button class="mode-btn" data-count="20">20문제</button>
+          <button class="mode-btn" data-count="50">50문제</button>
+          <button class="mode-btn" data-count="100">100문제 전체</button>
+        </div>
+      </div>
+
+      <button class="start-btn" id="startBtn">
+        🚀 퀴즈 시작하기!
+      </button>
+    </div>
+  </div>
+
+  <!-- 퀴즈 화면 -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-container">
+      <header class="quiz-header">
+        <div class="progress-info">
+          <span id="questionCounter">1 / 10</span>
+          <span id="categoryTag" class="cat-tag">🌍 환경</span>
+        </div>
+        <div class="header-right">
+          <div class="score-display">
+            <span>⭐ 점수: </span><span id="currentScore">0</span>
+          </div>
+          <button class="quit-btn" id="quitBtn" title="처음으로 돌아가기">🏠 그만하기</button>
+        </div>
+      </header>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <main class="question-area">
+        <div class="question-number" id="questionNumber">Q1</div>
+        <p class="question-text" id="questionText">문제가 여기에 표시됩니다.</p>
+      </main>
+
+      <div class="choices-grid" id="choicesGrid">
+        <!-- 선택지 JS로 생성 -->
+      </div>
+
+      <div class="feedback-box" id="feedbackBox">
+        <div class="feedback-icon" id="feedbackIcon"></div>
+        <div class="feedback-text" id="feedbackText"></div>
+        <div class="explanation-text" id="explanationText"></div>
+        <button class="next-btn" id="nextBtn">다음 문제 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 확인 모달 -->
+  <div id="quitModal" class="modal-overlay" aria-modal="true" role="dialog">
+    <div class="modal-box">
+      <div class="modal-emoji">🤔</div>
+      <p class="modal-title">퀴즈를 그만할까요?</p>
+      <p class="modal-desc">지금까지 푼 기록은 저장되지 않아요.<br/>정말 처음 화면으로 돌아갈까요?</p>
+      <div class="modal-btns">
+        <button class="modal-cancel" id="modalCancelBtn">계속 풀기 ✏️</button>
+        <button class="modal-confirm" id="modalConfirmBtn">처음으로 🏠</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="screen-result" class="screen">
+    <div class="result-container">
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h2 class="result-title" id="resultTitle">퀴즈 완료!</h2>
+      <div class="result-score-wrap">
+        <div class="result-score" id="resultScore">0</div>
+        <div class="result-total" id="resultTotal">/ 0점</div>
+      </div>
+      <div class="result-grade" id="resultGrade"></div>
+      <div class="result-message" id="resultMessage"></div>
+
+      <div class="result-stats">
+        <div class="stat-box correct-box">
+          <span class="stat-num" id="correctCount">0</span>
+          <span class="stat-label">✅ 정답</span>
+        </div>
+        <div class="stat-box wrong-box">
+          <span class="stat-num" id="wrongCount">0</span>
+          <span class="stat-label">❌ 오답</span>
+        </div>
+        <div class="stat-box rate-box">
+          <span class="stat-num" id="ratePercent">0%</span>
+          <span class="stat-label">🎯 정답률</span>
+        </div>
+      </div>
+
+      <div class="result-btns">
+        <button class="restart-btn" id="restartBtn">🔄 다시 도전!</button>
+        <button class="home-btn" id="homeBtn">🏠 처음으로</button>
+      </div>
+
+      <div class="wrong-review" id="wrongReview"></div>
+    </div>
+  </div>
+
+  <script src="js/quizdata.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
